@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kunal's Birthday Adventure 🎂</title>
+
+<title>Happy Birthday Kunal 🎂</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@400;600;700;900&display=swap');
@@ -14,13 +15,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --pink: #ff4fd8;
-    --purple: #9b5cff;
-    --blue: #50d9ff;
-    --gold: #ffe27a;
-}
-
 body {
     min-height: 100vh;
     overflow-x: hidden;
@@ -29,12 +23,16 @@ body {
     background: #090615;
 }
 
-#stars {
+#stars, #confetti {
     position: fixed;
     inset: 0;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
 }
+
+#stars { z-index: 0; }
+#confetti { z-index: 10; }
 
 .container {
     min-height: 100vh;
@@ -54,8 +52,7 @@ body {
     border: 1px solid #ffffff22;
     border-radius: 28px;
     background: linear-gradient(145deg, #211339dd, #100a20ee);
-    box-shadow: 0 0 45px #9b5cff25,
-                inset 0 0 30px #ffffff05;
+    box-shadow: 0 0 45px #9b5cff25;
     backdrop-filter: blur(15px);
 }
 
@@ -63,7 +60,7 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 12px;
     letter-spacing: 4px;
-    color: var(--blue);
+    color: #50d9ff;
     margin-bottom: 25px;
 }
 
@@ -87,18 +84,6 @@ p {
     color: #d6c9ed;
 }
 
-.hero {
-    font-size: 90px;
-    margin: 20px 0;
-    filter: drop-shadow(0 0 25px #ff4fd877);
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
 button {
     width: 100%;
     padding: 15px;
@@ -112,23 +97,27 @@ button {
     background: linear-gradient(90deg, #ff8be6, #b99bff, #7be8ff);
     cursor: pointer;
     box-shadow: 0 0 25px #b17cff55;
-    transition: 0.3s;
+    transition: .3s;
 }
 
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 35px #b17cff99;
 }
 
 button:active {
     transform: scale(.97);
 }
 
-.small {
-    font-size: 10px;
-    color: #9384b4;
-    letter-spacing: 2px;
-    margin-top: 22px;
+.hero {
+    font-size: 90px;
+    margin: 20px 0;
+    filter: drop-shadow(0 0 25px #ff4fd877);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
 }
 
 #gameScreen,
@@ -213,11 +202,12 @@ button:active {
     50% { transform: scale(1.2); }
 }
 
-#confetti {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 10;
+#secret {
+    display: none;
+    font-size: 14px;
+    color: #ffe27a;
+    margin-top: 20px;
+    line-height: 2;
 }
 
 .floating {
@@ -235,12 +225,11 @@ button:active {
     }
 }
 
-#secret {
-    display: none;
-    font-size: 14px;
-    color: var(--gold);
-    margin-top: 20px;
-    line-height: 2;
+.small {
+    font-size: 10px;
+    color: #9384b4;
+    letter-spacing: 2px;
+    margin-top: 22px;
 }
 
 @media(max-width:380px) {
@@ -263,6 +252,11 @@ button:active {
 
 <canvas id="stars"></canvas>
 <canvas id="confetti"></canvas>
+
+<!-- BACKGROUND BIRTHDAY MUSIC -->
+<audio id="birthdaySong" loop preload="auto">
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container">
 
@@ -292,7 +286,7 @@ Today, the whole game is about YOU!
 </button>
 
 <div class="small">
-PLAYER : KUNAL &nbsp; | &nbsp; LEVEL : LEGEND
+PLAYER : KUNAL | LEVEL : LEGEND
 </div>
 
 </div>
@@ -392,7 +386,7 @@ Dosti apni lifetime wali hai! ❤️
 
 Kunal bhai, tu ek number hai! ❤️<br>
 Dost nahi, family hai tu.<br>
-Happy Birthday, mere bhai! 🎂<br><br>
+Happy Birthday, mere legend! 🎂<br><br>
 — Tera Jigri Mitrr 🫂
 
 </div>
@@ -467,6 +461,13 @@ function drawStars() {
 drawStars();
 
 
+// BACKGROUND MUSIC
+
+const song = document.getElementById("birthdaySong");
+
+song.volume = 0.7;
+
+
 // GAME START
 
 function startGame() {
@@ -476,6 +477,11 @@ function startGame() {
     document.getElementById("gameScreen").style.display = "block";
 
     document.getElementById("progressBar").style.width = "30%";
+
+    // Music starts on first user interaction
+    song.play().catch(() => {
+        console.log("Music playback was blocked by browser.");
+    });
 
     balloons();
 
@@ -656,6 +662,8 @@ function animate() {
 }
 
 
+// RESIZE
+
 window.addEventListener("resize", () => {
 
     canvas.width = innerWidth;
@@ -669,4 +677,4 @@ window.addEventListener("resize", () => {
 </script>
 
 </body>
-  </html>
+</html>
