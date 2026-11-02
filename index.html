@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kunal's Birthday Adventure 🎂</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@400;600;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pink: #ff4fd8;
+    --purple: #9b5cff;
+    --blue: #50d9ff;
+    --gold: #ffe27a;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    background: #090615;
+}
+
+#stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    padding: 35px 23px;
+    border: 1px solid #ffffff22;
+    border-radius: 28px;
+    background: linear-gradient(145deg, #211339dd, #100a20ee);
+    box-shadow: 0 0 45px #9b5cff25,
+                inset 0 0 30px #ffffff05;
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--blue);
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: clamp(30px, 8vw, 43px);
+    line-height: 1.2;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ff9be9, #a78bff, #68e3ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    font-size: 21px;
+    margin: 15px 0;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #d6c9ed;
+}
+
+.hero {
+    font-size: 90px;
+    margin: 20px 0;
+    filter: drop-shadow(0 0 25px #ff4fd877);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #180b2b;
+    background: linear-gradient(90deg, #ff8be6, #b99bff, #7be8ff);
+    cursor: pointer;
+    box-shadow: 0 0 25px #b17cff55;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 35px #b17cff99;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+.small {
+    font-size: 10px;
+    color: #9384b4;
+    letter-spacing: 2px;
+    margin-top: 22px;
+}
+
+#gameScreen,
+#finalScreen {
+    display: none;
+}
+
+.badge {
+    display: inline-block;
+    border: 1px solid #ff4fd866;
+    color: #ff9be9;
+    padding: 7px 15px;
+    border-radius: 50px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.progress {
+    height: 6px;
+    border-radius: 10px;
+    background: #ffffff15;
+    margin: 25px 0;
+    overflow: hidden;
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4fd8, #50d9ff);
+    transition: 1s;
+}
+
+.cake {
+    font-size: 100px;
+    cursor: pointer;
+    margin: 20px 0;
+    display: inline-block;
+    animation: cakeGlow 1.5s infinite alternate;
+    filter: drop-shadow(0 0 15px #ff8bd8);
+}
+
+@keyframes cakeGlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+}
+
+#gift {
+    font-size: 85px;
+    margin: 20px 0;
+    cursor: pointer;
+    display: inline-block;
+    transition: .5s;
+}
+
+#gift:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+#giftMessage {
+    display: none;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ffe27a55;
+    border-radius: 20px;
+    background: #ffe27a0c;
+    animation: reveal 1s ease;
+}
+
+@keyframes reveal {
+    from { opacity: 0; transform: scale(.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.heart {
+    font-size: 28px;
+    margin: 15px;
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    50% { transform: scale(1.2); }
+}
+
+#confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating {
+    position: fixed;
+    bottom: -100px;
+    font-size: 35px;
+    pointer-events: none;
+    animation: rise 9s linear infinite;
+    z-index: 1;
+}
+
+@keyframes rise {
+    to {
+        transform: translateY(-120vh) rotate(30deg);
+    }
+}
+
+#secret {
+    display: none;
+    font-size: 14px;
+    color: var(--gold);
+    margin-top: 20px;
+    line-height: 2;
+}
+
+@media(max-width:380px) {
+    .card {
+        padding: 28px 18px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .hero {
+        font-size: 75px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+<canvas id="confetti"></canvas>
+
+<div class="container">
+
+<div class="card">
+
+<div class="logo">✦ BIRTHDAY.EXE ✦</div>
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+
+<div class="badge">SPECIAL MISSION UNLOCKED</div>
+
+<h1>HAPPY<br>BIRTHDAY</h1>
+
+<h2 style="color:#ff9be9">KUNAL ❤️</h2>
+
+<div class="hero">🎮</div>
+
+<p>
+A legendary player was born on this day.<br>
+Today, the whole game is about YOU!
+</p>
+
+<button onclick="startGame()">
+▶ START THE ADVENTURE
+</button>
+
+<div class="small">
+PLAYER : KUNAL &nbsp; | &nbsp; LEVEL : LEGEND
+</div>
+
+</div>
+
+
+<!-- GAME SCREEN -->
+
+<div id="gameScreen">
+
+<div class="badge">LEVEL 01 — BIRTHDAY QUEST</div>
+
+<h1>MISSION<br>UNLOCKED</h1>
+
+<div class="progress">
+<div id="progressBar"></div>
+</div>
+
+<h2 id="questTitle">🎂 Birthday Cake</h2>
+
+<p id="questText">
+Tap the cake to unlock your birthday surprise!
+</p>
+
+<div class="cake" id="cake" onclick="cutCake()">
+🎂
+</div>
+
+<p id="cakeHint">
+TAP THE CAKE ✨
+</p>
+
+<div id="giftSection" style="display:none">
+
+<h2 style="color:#ffe27a">
+MISSION COMPLETE!
+</h2>
+
+<p>
+You have unlocked your secret birthday gift.
+</p>
+
+<div id="gift" onclick="openGift()">
+🎁
+</div>
+
+<p>CLICK TO OPEN YOUR GIFT</p>
+
+</div>
+
+<div id="giftMessage">
+
+<div class="badge">SECRET MESSAGE UNLOCKED</div>
+
+<h2 style="color:#ffe27a">
+TO MY JIGRI KUNAL ❤️
+</h2>
+
+<p>
+Happy Birthday mere bhai! 🫂
+<br><br>
+
+Tu sirf mera dost nahi,
+meri life ka ek bahut special part hai.
+<br><br>
+
+Tere saath ki memories,
+apni bakchodi aur hasi-mazaak
+hamesha yaad rahenge.
+<br><br>
+
+Life mein kitni bhi problems aayein,
+bas yaad rakhna ki tera jigri
+hamesha tere saath khada hai.
+<br><br>
+
+Teri har wish poori ho,
+har dream complete ho,
+aur tu hamesha hasta rahe.
+<br><br>
+
+<strong style="color:#ff9be9">
+Dosti apni lifetime wali hai! ❤️
+</strong>
+</p>
+
+<div class="heart">❤️ 🫂 ❤️</div>
+
+<button onclick="celebrate()">
+🎉 CELEBRATE AGAIN
+</button>
+
+<button onclick="showSecret()" style="background:#ffe27a">
+🔐 ONE LAST SECRET
+</button>
+
+<div id="secret">
+
+Kunal bhai, tu ek number hai! ❤️<br>
+Dost nahi, family hai tu.<br>
+Happy Birthday, mere bhai! 🎂<br><br>
+— Tera Jigri Mitrr 🫂
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FINAL SCREEN -->
+
+<div id="finalScreen">
+
+<div class="hero">🏆</div>
+
+<h1>YOU ARE<br>LEGENDARY!</h1>
+
+<h2 style="color:#ffe27a">
+HAPPY BIRTHDAY KUNAL
+</h2>
+
+<p>
+You completed the birthday quest!<br>
+May your life be full of happiness,
+success and unlimited fun.
+</p>
+
+<div class="heart">❤️</div>
+
+<button onclick="location.reload()">
+↻ PLAY AGAIN
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+// STARS BACKGROUND
+
+const stars = document.getElementById("stars");
+const sctx = stars.getContext("2d");
+
+function drawStars() {
+
+    stars.width = innerWidth;
+    stars.height = innerHeight;
+
+    for (let i = 0; i < 150; i++) {
+
+        sctx.fillStyle = "rgba(255,255,255," + Math.random() + ")";
+
+        sctx.beginPath();
+
+        sctx.arc(
+            Math.random() * stars.width,
+            Math.random() * stars.height,
+            Math.random() * 1.5,
+            0,
+            Math.PI * 2
+        );
+
+        sctx.fill();
+
+    }
+
+}
+
+drawStars();
+
+
+// GAME START
+
+function startGame() {
+
+    document.getElementById("startScreen").style.display = "none";
+
+    document.getElementById("gameScreen").style.display = "block";
+
+    document.getElementById("progressBar").style.width = "30%";
+
+    balloons();
+
+    confetti();
+
+}
+
+
+// CAKE CUT
+
+let cakeClicked = false;
+
+function cutCake() {
+
+    if (cakeClicked) return;
+
+    cakeClicked = true;
+
+    document.getElementById("cake").innerHTML = "🍰";
+
+    document.getElementById("questTitle").innerHTML =
+    "🎉 CAKE UNLOCKED!";
+
+    document.getElementById("questText").innerHTML =
+    "Happy Birthday Kunal! Your next surprise is ready.";
+
+    document.getElementById("cakeHint").innerHTML =
+    "LEVEL 01 COMPLETED ✓";
+
+    document.getElementById("giftSection").style.display = "block";
+
+    document.getElementById("progressBar").style.width = "70%";
+
+    confetti();
+
+}
+
+
+// GIFT OPEN
+
+let giftOpened = false;
+
+function openGift() {
+
+    if (giftOpened) return;
+
+    giftOpened = true;
+
+    document.getElementById("gift").innerHTML = "💝";
+
+    document.getElementById("giftMessage").style.display = "block";
+
+    document.getElementById("progressBar").style.width = "100%";
+
+    confetti();
+
+}
+
+
+// SECRET MESSAGE
+
+function showSecret() {
+
+    document.getElementById("secret").style.display = "block";
+
+    confetti();
+
+}
+
+
+// CELEBRATE
+
+function celebrate() {
+
+    confetti();
+
+    balloons();
+
+}
+
+
+// BALLOONS
+
+function balloons() {
+
+    const emojis = ["🎈", "🎉", "💖", "✨", "🎊"];
+
+    for (let i = 0; i < 20; i++) {
+
+        let b = document.createElement("div");
+
+        b.className = "floating";
+
+        b.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+
+        b.style.left = Math.random() * 100 + "vw";
+
+        b.style.animationDelay = Math.random() * 5 + "s";
+
+        document.body.appendChild(b);
+
+        setTimeout(() => b.remove(), 10000);
+
+    }
+
+}
+
+
+// CONFETTI
+
+const canvas = document.getElementById("confetti");
+
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+
+canvas.height = innerHeight;
+
+let particles = [];
+
+function confetti() {
+
+    for (let i = 0; i < 180; i++) {
+
+        particles.push({
+
+            x: innerWidth / 2,
+
+            y: innerHeight / 2,
+
+            dx: (Math.random() - .5) * 15,
+
+            dy: (Math.random() - .5) * 15,
+
+            size: Math.random() * 8 + 3,
+
+            life: 100,
+
+            color: `hsl(${Math.random() * 360},100%,70%)`
+
+        });
+
+    }
+
+    animate();
+
+}
+
+
+function animate() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+
+        ctx.fillStyle = p.color;
+
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+
+        p.x += p.dx;
+
+        p.y += p.dy;
+
+        p.dy += .12;
+
+        p.life--;
+
+        if (p.life <= 0) particles.splice(i, 1);
+
+    });
+
+    if (particles.length > 0) {
+
+        requestAnimationFrame(animate);
+
+    }
+
+}
+
+
+window.addEventListener("resize", () => {
+
+    canvas.width = innerWidth;
+
+    canvas.height = innerHeight;
+
+    drawStars();
+
+});
+
+</script>
+
+</body>
+  </html>
